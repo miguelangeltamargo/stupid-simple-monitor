@@ -116,8 +116,6 @@ elif [[ $resource_choice -eq 5 ]]; then
         printf "%7s\t%20s \t%-5s\n" "$(get_cpu_usage)" "$(get_mem_usage)" "$(get_dsk_usage)"
         # sleep 1
         echo -e "\n\n\n"
-        read -t 1 -p "Zoom(Telescope) Into Resource......Im a a fucking pirate...." decision
-
-        if
+        read -t 1 -p "Zoom(Telescope) Into Resource......like a pirate...." decision
     done
 fi
