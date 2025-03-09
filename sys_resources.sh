@@ -12,6 +12,12 @@ echo "==================== SS Monitor ===================="
 # read resource_choice
 resource_choice=5 # debug line
 
+
+get_user(){
+    underline=$(tput smul)
+    user_name=$(whoami)
+    printf "Captain: ${underline}${user_name}\n"
+}
 get_uptime(){
     # echo $((($(date +%s) - $(sysctl -n kern.boottime | awk '{print $4}' | tr -d ','))/3600)) | awk '{print "This is uptime in hours: \n" $1}'
     boot_time=$(sysctl kern.boottime | awk '{print $5}' | tr -d ',')
@@ -105,17 +111,23 @@ elif [[ $resource_choice -eq 5 ]]; then
     GREEN='\033[0;32m'
     YELLOW='\033[0;33m'
     ORANGE='\033[38;5;215m'
+    BROWN='\033[38;5;180m'
+    BLUE='\033[36;5;210m'
     CYAN='\033[0;36m'
     RESET='\033[0m'
-
+    underline=$(tput smul)
+    nounderline=$(tput rmul)
     while true; do
         clear
-        echo "==================== SSMonitor ===================="
+        printf "${underline}${BROWN}========================================${RESET}${nounderline} SSMonitor ${underline}${BROWN}========================================${RESET}\n"
+        # echo "========================================${underline} SSMonitor ${nounderline}========================================"
+        printf "$(get_user)\n"
         printf "${CYAN}$(get_uptime)${RESET}\n"
-        printf "${ORANGE}CPU Usage(1)${RESET} \t ${RED}MEM Usage(2)${RESET} \t ${GREEN}DSK Usage(3)${RESET}\n"
-        printf "%7s\t%20s \t%-5s\n" "$(get_cpu_usage)" "$(get_mem_usage)" "$(get_dsk_usage)"
+        printf "${underline}${ORANGE}CPU Usage(1)${RESET} \t\t ${underline}${RED}MEM Usage(2)${RESET} \t\t ${underline}${GREEN}DSK Usage(3)${RESET} \t\t ${underline}${BLUE}NET Usage(4)${RESET}\n"
+        printf "%8s %28s %22s\n" "$(get_cpu_usage)" "$(get_mem_usage)" "$(get_dsk_usage)"
         # sleep 1
         echo -e "\n\n\n"
+        printf "${underline}${BROWN}========================================${RESET}${nounderline} SSMonitor ${underline}${BROWN}========================================${RESET}\n"
         read -t 1 -p "Zoom(Telescope) Into Resource......like a pirate...." decision
     done
 fi
